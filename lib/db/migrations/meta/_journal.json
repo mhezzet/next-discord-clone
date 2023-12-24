@@ -1,0 +1,20 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1703322235274,
+      "tag": "0000_premium_iron_lad",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1703322494410,
+      "tag": "0001_wonderful_lady_mastermind",
+      "breakpoints": true
+    }
+  ]
+}
