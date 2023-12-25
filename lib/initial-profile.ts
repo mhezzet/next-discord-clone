@@ -1,6 +1,6 @@
 import { currentUser, redirectToSignIn } from '@clerk/nextjs'
 import { db } from '@/lib/db'
-import { profiles } from './db/schema'
+import { profiles } from '@/lib/db/schema'
 
 export const initialProfile = async () => {
   const user = await currentUser()

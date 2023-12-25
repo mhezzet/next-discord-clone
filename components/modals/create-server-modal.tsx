@@ -14,18 +14,31 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import * as actions from '@/lib/actions'
-import { useState } from 'react'
+import { revalidatePath } from 'next/cache'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { useFormState, useFormStatus } from 'react-dom'
 
-interface IInitialModal {}
+interface ICreateServerModal {
+  open: boolean
+  onOpenChange: (open: boolean) => void
+}
 
-const InitialModal: React.FC<IInitialModal> = ({}) => {
-  const [formState, action] = useFormState(actions.createServerIntial, { errors: {} })
+const CreateServerModal: React.FC<ICreateServerModal> = ({ open, onOpenChange }) => {
+  const [formState, action] = useFormState(actions.createServer, { errors: {} })
   const [imageUrl, setImageUrl] = useState('')
+  const router = useRouter()
+
+  useEffect(() => {
+    if (formState.serverId) {
+      onOpenChange(false)
+      router.push(`/servers/${formState.serverId}`)
+    }
+  }, [formState.serverId, onOpenChange, router])
 
   return (
-    <Dialog open>
-      <DialogContent closeButton={false} className='overflow-hidden p-0'>
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className='overflow-hidden p-0'>
         <DialogHeader className='px-6 pt-8'>
           <DialogTitle className='text-center text-2xl'>Customize your server</DialogTitle>
           <DialogDescription className='text-center '>
@@ -37,7 +50,7 @@ const InitialModal: React.FC<IInitialModal> = ({}) => {
           <div className='space-y-8 px-6'>
             <div className='flex flex-col items-center justify-center gap-2 text-center'>
               <FileUpload endpoint='serverImage' onChange={setImageUrl} value={imageUrl} />
-              {formState.errors?.imageUrl && (
+              {formState?.errors?.imageUrl && (
                 <p className='text-center text-sm text-destructive'>
                   {formState.errors.imageUrl.join(', ')}
                 </p>
@@ -48,13 +61,13 @@ const InitialModal: React.FC<IInitialModal> = ({}) => {
             <div className='space-y-2'>
               <Label className='text-xs font-bold uppercase'>Server name</Label>
               <Input placeholder='Enter server name' name='name' />
-              {formState.errors?.name && (
+              {formState?.errors?.name && (
                 <p className='text-sm text-destructive '>{formState.errors.name.join(', ')}</p>
               )}
             </div>
           </div>
 
-          {formState.errors?.general && (
+          {formState?.errors?.general && (
             <div className='px-6'>
               <ServerErrorAlert message={formState.errors.general} />
             </div>
@@ -79,4 +92,4 @@ export function SubmitButton() {
   )
 }
 
-export default InitialModal
+export default CreateServerModal
