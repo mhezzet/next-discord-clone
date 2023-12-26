@@ -35,7 +35,7 @@ export const servers = sqliteTable(
 
     name: text('name').notNull(),
     imageUrl: text('imageUrl').notNull(),
-    inviteCode: text('inviteCode').notNull(),
+    inviteCode: text('inviteCode').notNull().unique(),
     profileId: text('profileId')
       .references(() => profiles.id, { onDelete: 'cascade' })
       .notNull(),

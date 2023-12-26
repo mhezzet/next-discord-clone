@@ -1,7 +1,8 @@
 import { db } from '@/lib/db'
 import { currentUser } from '@clerk/nextjs'
+import { cache } from 'react'
 
-export const currentProfile = async () => {
+export const currentProfile = cache(async () => {
   const user = await currentUser()
 
   if (!user) return null
@@ -11,4 +12,4 @@ export const currentProfile = async () => {
   })
 
   return profile
-}
+})

@@ -12,12 +12,6 @@ const Setup: NextPage = async ({}) => {
   })
 
   if (memberOfAnyServer) {
-    console.log(`Profile is a member of server with ID: ${memberOfAnyServer.serverId}`)
-  } else {
-    console.log('Profile is not a member of any server')
-  }
-
-  if (memberOfAnyServer) {
     return redirect(`/servers/${memberOfAnyServer.serverId}`)
   }
 

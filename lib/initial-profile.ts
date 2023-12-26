@@ -22,12 +22,15 @@ export const initialProfile = async () => {
       ? `${user.firstName || ''} ${user.lastName || ''}`.trim()
       : user.username || user.emailAddresses[0].emailAddress.split('@')[0]
 
-  const newProfile = await db.insert(profiles).values({
-    userId: user.id,
-    name,
-    imageUrl: user.imageUrl,
-    email: user.emailAddresses[0].emailAddress,
-  })
+  const [newProfile] = await db
+    .insert(profiles)
+    .values({
+      userId: user.id,
+      name,
+      imageUrl: user.imageUrl,
+      email: user.emailAddresses[0].emailAddress,
+    })
+    .returning()
 
   return newProfile
 }
