@@ -2,8 +2,7 @@
 
 import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
-import { channels, servers } from '@/lib/db/schema'
-import { eq } from 'drizzle-orm'
+import { channels } from '@/lib/db/schema'
 import { revalidatePath } from 'next/cache'
 import { isRedirectError } from 'next/dist/client/components/redirect'
 import { v4 } from 'uuid'

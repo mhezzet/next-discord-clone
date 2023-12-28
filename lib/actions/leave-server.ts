@@ -29,7 +29,12 @@ export async function leaveServer(
       .where(and(eq(members.serverId, serverId), eq(members.profileId, profile.id)))
 
     revalidatePath(`/servers/${serverId}`)
-    redirect(`/servers/${serverId}`)
+    const channel = await db.query.channels.findFirst({
+      where: (channels, { eq, and }) =>
+        and(eq(channels.name, 'general'), eq(channels.serverId, serverId)),
+    })
+
+    redirect(`/servers/${channel?.serverId}/channels/${channel?.id}`)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error

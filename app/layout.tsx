@@ -3,6 +3,8 @@ import ThemeProvider from '@/components/providers/theme-provider'
 import type { Metadata } from 'next'
 import { Open_Sans } from 'next/font/google'
 import './globals.css'
+import SocketProvider from '@/components/providers/socket-provider'
+import QueryProvider from '@/components/providers/query-provider'
 
 const font = Open_Sans({ subsets: ['latin'] })
 
@@ -19,10 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider
             attribute='class'
             defaultTheme='dark'
-            enableSystem
+            enableSystem={false}
             storageKey='discord-clone-theme'
           >
-            {children}
+            <SocketProvider>
+              <QueryProvider>{children}</QueryProvider>
+            </SocketProvider>
           </ThemeProvider>
         </body>
       </html>

@@ -1,6 +1,5 @@
 import { ModeToggle } from '@/components/mode-toggle'
 import { UserButton } from '@clerk/nextjs'
-import { Suspense } from 'react'
 
 interface INavigationFooter {}
 

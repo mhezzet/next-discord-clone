@@ -64,7 +64,12 @@ export async function createServerIntial(
 
     await db.insert(members).values({ profileId: profile.id, serverId: server.id, role: 'ADMIN' })
 
-    redirect(`/servers/${server.id}`)
+    const channel = await db.query.channels.findFirst({
+      where: (channels, { eq, and }) =>
+        and(eq(channels.name, 'general'), eq(channels.serverId, server.id)),
+    })
+
+    redirect(`/servers/${channel?.serverId}/channels/${channel?.id}`)
   } catch (error) {
     if (isRedirectError(error)) {
       throw error

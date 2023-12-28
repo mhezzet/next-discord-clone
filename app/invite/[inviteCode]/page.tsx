@@ -30,8 +30,17 @@ const InviteCode: NextPage<IInviteCode> = async ({ params: { inviteCode } }) => 
       and(eq(members.serverId, server.id), eq(members.profileId, profile.id)),
   })
 
+  const channel = await db.query.channels.findFirst({
+    where: (channels, { eq, and }) =>
+      and(eq(channels.name, 'general'), eq(channels.serverId, server.id)),
+  })
+
+  if (!channel) {
+    return null
+  }
+
   if (isAlreadyMember) {
-    return redirect(`/servers/${server.id}`)
+    return redirect(`/servers/${channel.serverId}/channels/${channel.id}`)
   }
 
   await db.insert(members).values({
@@ -40,7 +49,7 @@ const InviteCode: NextPage<IInviteCode> = async ({ params: { inviteCode } }) => 
     role: 'GUEST',
   })
 
-  return redirect(`/servers/${server.id}`)
+  return redirect(`/servers/${channel.serverId}/channels/${channel.id}`)
 }
 
 export default InviteCode

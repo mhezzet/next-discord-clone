@@ -5,7 +5,6 @@ import { currentProfile } from '@/lib/current-profile'
 import { db } from '@/lib/db'
 import { redirectToSignIn } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
-import { Suspense } from 'react'
 
 interface ILayout {
   children: React.ReactNode
@@ -18,9 +17,7 @@ const Layout: React.FC<ILayout> = async ({ children, params: { serverId } }) => 
   return (
     <div className='h-full'>
       <div className='fixed inset-y-0 z-20 hidden h-full w-60 flex-col border-r md:flex'>
-        <Suspense fallback={<Skeleton className='m-4 h-full' />}>
-          <Channels serverId={serverId} />
-        </Suspense>
+        <Channels serverId={serverId} />
       </div>
       <main className='h-full border-r md:pl-60'>{children}</main>
     </div>

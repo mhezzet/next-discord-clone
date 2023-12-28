@@ -34,7 +34,7 @@ const DeleteServerModal: React.FC<IDeleteServerModal> = ({
     if (formState?.success) {
       onOpenChange(false)
     }
-  }, [serverId, formState?.success, onOpenChange, router])
+  }, [formState?.success, onOpenChange, router])
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
