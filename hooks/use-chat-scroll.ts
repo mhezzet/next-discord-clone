@@ -54,7 +54,7 @@ export const useChatScroll = (props: ChatScrollProps) => {
         bottomRef?.current?.scrollIntoView({
           behavior: 'smooth',
         })
-      }, 500)
+      }, 1000)
     }
   }, [bottomRef, chatRef, hasInitialized, count])
 }
